@@ -1,0 +1,21 @@
+- name: deploy to tomcat
+  hosts: web
+  become: yes
+  tasks:
+      - name: copy to tomcat
+        copy:
+            src: '/var/snap/jenkins/4874/workspace/web1/target/web1.war'
+            dest: '/opt/tomcat/webapps/web1.war'
+            remote_src: no
+      
+      - name: restart tomcat
+        hosts: tomcat
+        become: yes
+        tasks: 
+            - name: restart tomcat manually
+              ansibile.builtin.shell: |
+              /opt/tomcat/bin/shutdown.sh || true
+              sleep 5
+              /opt/tomcat/bin/startup.sh
+              
+              
