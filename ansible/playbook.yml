@@ -8,12 +8,12 @@
             dest: '/opt/tomcat/webapps/web1.war'
             remote_src: no
       
-      - name: Restart Tomcat server
-        hosts: tomcat
-        become: yes
-        tasks:
-        - name: Restart Tomcat manually
-        ansible.builtin.shell: |
+- name: Restart Tomcat server
+  hosts: tomcat
+  become: yes
+  tasks:
+    - name: Restart Tomcat manually
+      ansible.builtin.shell: |
         /opt/tomcat/bin/shutdown.sh || true
         sleep 5
         /opt/tomcat/bin/startup.sh
